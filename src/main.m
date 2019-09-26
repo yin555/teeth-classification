@@ -47,6 +47,9 @@ K = 2000;
 
 % % parameters for the PH approach
 % approach = 'PH';
+% % choices of filtration inlcudes: VR, VR_modified, maxMeancurv,
+% % absMeancurv, MinusAbsMeancurv
+% filtration = 'VR';
 % norm = false;
 % maxdim = 2;
 % numPoints = 500;
@@ -56,7 +59,7 @@ K = 2000;
 if strcmp(approach,'OT')
     params = param_setup_OT('uniform','euc',norm,D,epsilon, K);
 elseif strcmp(approach,'PH')
-    params = param_setup_PH('VR','euc',norm,'bt',maxdim,numPoints);
+    params = param_setup_PH(filtration,'euc',norm,'bt',maxdim,numPoints);
 else
     disp('Invalid approach')
 end
