@@ -1,0 +1,16 @@
+function params = param_setup_PH(filt,dist,norm,bar_dist,maxdim,numPoints,coefs)
+% setup parameters for the PH approach
+% param: coef is optional, only used in some filtration functions
+params.approach = 'PH';
+params.filtration = filt;
+params.metric = dist;
+params.norm = norm;
+params.maxdim = maxdim;
+params.barcode_distance = bar_dist;
+params.numPoints = numPoints;
+if nargin < 7
+    params.coef = -1;
+else
+    params.coef = coefs;
+end
+end
