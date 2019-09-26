@@ -19,7 +19,7 @@ global paths
 wd = pwd;
 bool_1cycle = false;
 cd(paths.in.shortloop)
-system(['./ShortLoop' path2file ' -v -t'])
+system(['./ShortLoop ' path2file ' -v -t'])
 fid = fopen([path2file(1:end-4) '_loops.txt'],'r');
 first_line = textscan(fid,'%f %s',1,'delimiter',' ');
 n_loop = first_line(1);
