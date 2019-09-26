@@ -1,10 +1,14 @@
 function compute_dist_OT(params,fname1,fname2,sname1,sname2)
 % compute the distance (TLB) between a pair of shapes using optimal transport
 global paths
+addpath(paths.in.sinkhorn)
+
 if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2
 %     setup local shape distribution and measure for shape 1
+    path = [paths.out.locaDist '/' params.measure '/'];
+    mkdir(path)
     try
-        T = load([paths.out.locaDist sname1 '.mat']);
+        T = load([path sname1 '.mat']);
         vX = T.v;
         wX = T.w;
     catch
@@ -13,7 +17,7 @@ if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2
     
 %     setup local shape distribution and measure for shape 2
     try
-        T = load([paths.out.locaDist sname2 '.mat']);
+        T = load([path sname2 '.mat']);
         vY = T.v;
         wY = T.w;
     catch
@@ -69,7 +73,7 @@ end
 
 v = localDist(dmX,params.N,params.D,w);
 
-save([paths.out.localDist sname '.mat'],'v','w','I','dmX');
+save([paths.out.localDist '/' params.measure '/' sname '.mat'],'v','w','I','dmX');
 end
 
 function v = voronoi_measure(dm,I)
