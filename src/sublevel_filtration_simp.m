@@ -8,11 +8,10 @@ function [infinite_barcodes,dgm_dict,intervals_dict] = sublevel_filtration_simp(
 %adds javaplex path
 global paths
 wd = pwd;
-% addpath('../../matlab_examples/')
 addpath(paths.in.javaplex)
 load_javaplex;
 import edu.stanford.math.plex4.*;
-% disp('imported javaplex')
+
 stream = api.Plex4.createExplicitSimplexStream(max(f)+10);
 
 for face = T'
