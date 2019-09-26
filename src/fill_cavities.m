@@ -61,6 +61,9 @@ end
 end
 
 function [Tp,Xp,Yp,Zp] = fill_holes(T,X,Y,Z,all_loops)
+% fill loops by adding an extra vertex at the center of each loop and fill
+% the triangles formed by the centroid and two adjacent generating vertices
+% of the loop
 num_holes = length(all_loops);
 Tp = T;
 Xp = X;
