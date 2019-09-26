@@ -8,4 +8,5 @@ params.D = DD;
 params.eps = epsilon;
 params.K = K;
 params.N = 100;
+params.maxdim = 1;
 end

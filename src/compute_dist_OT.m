@@ -45,7 +45,7 @@ end
 
 function [v,w]= process_dm(filename,params,sname)
 global paths
-[T,X,Y,Z] = read_off_ph(filename);
+[T,X,Y,Z] = read_data(filename);
 %         disp('Computing Euclidean Farthest Point Sampling...')
 if params.K < length(X)
     I = euclid_far_samp(X,Y,Z,params.K);

@@ -4,7 +4,7 @@ global paths
 addpath(paths.in.ripser)
 
 % read mesh
-[T,X,Y,Z] = read_off_ph([paths.in.data fname]);
+[T,X,Y,Z] = read_data([paths.in.data fname]);
 % read fps sample points
 I = load_fps(params,fname);
 

@@ -69,18 +69,22 @@ dm = compute_distance_matrix(params);
 
 %% Classification accuracy
 % classify using leave-one-out
+Pe = zeros(params.maxdim,1);
+fig = cell(params.maxdim);
 
 % load labels by category: family, genus, diet
 category = 'diet';
 true_label = load_label(category);
 
-predict = leave_one_out(dm,true_label);
-
 savename = savename_setup(params);
-% compute the probability of error
-Pe = sum(true_label==predict)/length(true_label);
-save([paths.out.pe savename '.mat'],'Pe')
 
-% plot distance matrix and single-linkage dendrogram
-fig = clustergram(dm,'ColumnLabels',true_label);
-savefig(gcf,[paths.out.fig savename '.jpg'])
+for i = 1:params.maxdim
+    % compute the probability of error
+    predict = leave_one_out(dm{i},true_label);
+    Pe(i) = sum(true_label==predict)/length(true_label);
+
+    % plot distance matrix and single-linkage dendrogram
+    fig{i} = clustergram(dm{i},'ColumnLabels',true_label);
+    savefig(gcf,[paths.out.fig{i} savename '_dim' num2str(i) '.jpg'])
+end
+save([paths.out.pe savename '.mat'],'Pe')
