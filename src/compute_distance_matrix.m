@@ -2,6 +2,7 @@ function dm = compute_distance_matrix(params)
 % compute the pairwise disatnce matrix for shapes using a specific
 % approach
 global paths
+
 if sum(strcmp(params.approach,{'OT','PH'})) == 0
     disp('Invalid approach')
     return

@@ -34,6 +34,7 @@ for i = 1:numel(fn)-1
     mkdir([basepath 'data/cache/' fn{i}]);
 end
 mkdir(paths.out.fig)
+mkdir(paths.out.pe)
 
 %% Choose approach
 % choose from 'OT' (optimal transport)
@@ -46,6 +47,8 @@ K = 2000;
 
 % % parameters for the PH approach
 % approach = 'PH';
+% % choices of filtration inlcudes: VR, VR_modified, 
+% filtration = 'VR';
 % norm = false;
 % maxdim = 2;
 % numPoints = 500;
@@ -55,7 +58,7 @@ K = 2000;
 if strcmp(approach,'OT')
     params = param_setup_OT('uniform','euc',norm,D,epsilon, K);
 elseif strcmp(approach,'PH')
-    params = param_setup_PH('VR','euc',norm,'bt',maxdim,numPoints);
+    params = param_setup_PH(filtration,'euc',norm,'bt',maxdim,numPoints);
 else
     disp('Invalid approach')
 end
@@ -68,18 +71,22 @@ dm = compute_distance_matrix(params);
 
 %% Classification accuracy
 % classify using leave-one-out
+Pe = zeros(params.maxdim,1);
+fig = cell(params.maxdim);
 
 % load labels by category: family, genus, diet
 category = 'diet';
 true_label = load_label(category);
 
-predict = leave_one_out(dm,true_label);
+savename = savename_setup(params);
 
-savename = pat
-% compute the probability of error
-Pe = sum(true_label==predict)/length(true_label);
-save([paths.out.pe savename],)
+for i = 1:params.maxdim
+    % compute the probability of error
+    predict = leave_one_out(dm{i},true_label);
+    Pe(i) = sum(true_label==predict)/length(true_label);
 
-% plot distance matrix and single-linkage dendrogram
-fig = clustergram(dm,'ColumnLabels',true_label)
-savefig(gcf,)
+    % plot distance matrix and single-linkage dendrogram
+    fig{i} = clustergram(dm{i},'ColumnLabels',true_label);
+    savefig(gcf,[paths.out.fig{i} savename '_dim' num2str(i) '.jpg'])
+end
+save([paths.out.pe savename '.mat'],'Pe')

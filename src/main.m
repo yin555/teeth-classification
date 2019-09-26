@@ -29,7 +29,7 @@ paths.out.fig = [basepath 'out/figures/'];
 paths.out.pe = [basepath 'out/Pe/'];
 
 % create folders for each output field
-fn = fieldname(paths.out);
+fn = fieldnames(paths.out);
 for i = 1:numel(fn)-1
     mkdir([basepath 'data/cache/' fn{i}]);
 end
