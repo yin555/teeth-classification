@@ -5,7 +5,7 @@ addpath(paths.in.sinkhorn)
 
 if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2
 %     setup local shape distribution and measure for shape 1
-    path = [paths.out.locaDist '/' params.measure '/'];
+    path = [paths.out.locaDist '/' params.measure '/' num2str(params.K) '/'];
     mkdir(path)
     try
         T = load([path sname1 '.mat']);
@@ -73,7 +73,8 @@ end
 
 v = localDist(dmX,params.N,params.D,w);
 
-save([paths.out.localDist '/' params.measure '/' sname '.mat'],'v','w','I','dmX');
+save([paths.out.localDist '/' params.measure '/' num2str(params.K) '/' ...
+    sname '.mat'],'v','w','I','dmX');
 end
 
 function v = voronoi_measure(dm,I)
