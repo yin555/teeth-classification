@@ -1,7 +1,7 @@
 function tlb = compute_dist_OT(params,fname1,fname2,sname1,sname2)
 % compute the distance (TLB) between a pair of shapes using optimal transport
 global paths
-addpath(paths.in.sinkhorn)
+addpath(genpath(paths.in.sinkhorn))
 
 if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2
 %     setup local shape distribution and measure for shape 1
