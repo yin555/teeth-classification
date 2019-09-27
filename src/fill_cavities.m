@@ -44,7 +44,7 @@ all_loops = load_loop([path2file(1:end-4) '_loops.txt']);
 [Tp,Xp,Yp,Zp] = read_off_ph(path2file);
 disp('filling holes')
 [T,X,Y,Z] = fill_holes(Tp,Xp,Yp,Zp,all_loops);
-save([paths.in.filledTriangle sname '.mat'],'T','X','Y','Z');
+save([paths.out.filledTriangle sname '.mat'],'T','X','Y','Z');
 end
 
 function all_loops = load_loop(fname)
