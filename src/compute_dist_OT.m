@@ -40,6 +40,11 @@ if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2
     end
     
     disp('Computing tlb...')
+    %% options for sinkhorn solver
+    options.tau = 0;
+    options.niter = params.niter;
+    options.verb = 0;
+    
     [~,~,gamma,~,~,~] = sinkhorn_log(wX,wY,Q,epsParam,options);
 %     [ct gamma] = solveTranspProblem(wX,wY,Q);
     tlb = sum(sum(Q.*gamma)); % this will calculate the TLB (p=1)
@@ -58,7 +63,7 @@ else
 end
 
 % compute dm
-dmX = distance_matrix(metric_type,I,T,X,Y,Z);
+dmX = distance_matrix(params,I,T,X,Y,Z);
 diamX = max(max(dmX));
 if params.norm
     dmX = dmX/diamX; %normalize dm
