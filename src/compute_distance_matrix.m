@@ -10,7 +10,7 @@ end
 
 dataset = dir([paths.in.data '*.off']);
 n = length(dataset);
-p = nchoosek(n,2);
+p = nchoosek(1:n,2);
 
 parfor k = 1:length(p)
     % compute distance for each pair of shapes and save to file
