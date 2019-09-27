@@ -19,7 +19,9 @@ global paths
 wd = pwd;
 bool_1cycle = false;
 cd(paths.in.shortloop)
-system(['./ShortLoop ' path2file ' -v -t'])
+if exist([path2file(1:end-4) '_loops.txt'],'file') ~= 2
+    system(['./ShortLoop ' path2file ' -v -t'])
+end
 fid = fopen([path2file(1:end-4) '_loops.txt'],'r');
 first_line = textscan(fid,'%f %s',1,'delimiter',' ');
 n_loop = first_line(1);
@@ -47,7 +49,7 @@ end
 
 function all_loops = load_loop(fname)
 %load shortest loop and fill
-filestr = fileread([fname(1:end-4) '_loops.txt']);
+filestr = fileread(fname);
 filebyline = regexp(filestr, '\n', 'split');
 filebyline(cellfun(@isempty,filebyline)) = [];
 all_loops = cell(length(filebyline)-2,1);
