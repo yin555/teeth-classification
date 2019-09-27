@@ -5,7 +5,7 @@ addpath(paths.in.sinkhorn)
 
 if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2
 %     setup local shape distribution and measure for shape 1
-    path = [paths.out.locaDist '/' params.metric '/' params.measure '/' num2str(params.K) '/'];
+    path = [paths.out.localDist '/' params.metric '/' params.measure '/' num2str(params.K) '/'];
     mkdir(path)
     try
         T = load([path sname1 '.mat']);
