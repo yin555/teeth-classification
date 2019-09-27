@@ -15,9 +15,9 @@ p = nchoosek(1:n,2);
 parfor k = 1:length(p)
     % compute distance for each pair of shapes and save to file
     ik = p(k,1);
-    ik_data = read_data(dataset(ik));
+    ik_data = read_data(dataset(ik).name);
     jk = p(k,2);
-    jk_data = read_data(dataset(jk));
+    jk_data = read_data(dataset(jk).name);
     
     if strcmp(params.approach,'OT')
 %         compute TLB
