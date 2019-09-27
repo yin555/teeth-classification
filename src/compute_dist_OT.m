@@ -65,9 +65,9 @@ if params.norm
 end
 
 % initialize measure
-if strcmp(params.prob_measure,'uniform')
+if strcmp(params.measure,'uniform')
     w = ones(1,params.K)/params.K;
-elseif strcmp(params.prob_measure,'voronoi')
+elseif strcmp(params.measure,'voronoi')
     w = voronoi_measure(dmX,I);
 end
 
