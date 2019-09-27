@@ -65,7 +65,7 @@ else
 end
 
 %% Clean data (fill cavities)
-fill_cavities();
+% fill_cavities();
 
 %% Compute distance matrix
 dm = compute_distance_matrix(params);
