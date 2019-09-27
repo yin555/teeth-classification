@@ -1,4 +1,4 @@
-function compute_dist_OT(params,fname1,fname2,sname1,sname2)
+function tlb = compute_dist_OT(params,fname1,fname2,sname1,sname2)
 % compute the distance (TLB) between a pair of shapes using optimal transport
 global paths
 addpath(paths.in.sinkhorn)
