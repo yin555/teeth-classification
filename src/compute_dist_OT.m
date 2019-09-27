@@ -40,11 +40,11 @@ if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2
     end
     
     disp('Computing tlb...')
-    %% options for sinkhorn solver
+    
+    % options for sinkhorn solver
     options.tau = 0;
     options.niter = params.niter;
     options.verb = 0;
-    
     [~,~,gamma,~,~,~] = sinkhorn_log(wX,wY,Q,epsParam,options);
 %     [ct gamma] = solveTranspProblem(wX,wY,Q);
     tlb = sum(sum(Q.*gamma)); % this will calculate the TLB (p=1)
@@ -75,7 +75,7 @@ if strcmp(params.measure,'uniform')
 elseif strcmp(params.measure,'voronoi')
     w = voronoi_measure(dmX,I);
 end
-
+w = w(:);
 v = localDist(dmX,params.N,params.D,w);
 
 save([paths.out.localDist '/' params.metric '/' params.measure '/' num2str(params.K) '/' ...
