@@ -12,7 +12,7 @@ if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2
         vX = T.v;
         wX = T.w;
     catch
-        [vX,wX] = process_dm([paths.in.data fname1],params,sname1);
+        [vX,wX] = process_dm(fname1,params,sname1);
     end
     
 %     setup local shape distribution and measure for shape 2
@@ -21,7 +21,7 @@ if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2
         vY = T.v;
         wY = T.w;
     catch
-        [vY,wY] = process_dm([paths.in.data fname2],params,sname2);
+        [vY,wY] = process_dm(fname2,params,sname2);
     end
     
     K = params.K;

@@ -1,7 +1,7 @@
 function dm = compute_distance_matrix(params)
 % compute the pairwise disatnce matrix for shapes using a specific
 % approach
-global paths
+global paths;
 
 if sum(strcmp(params.approach,{'OT','PH'})) == 0
     disp('Invalid approach')
@@ -12,19 +12,17 @@ dataset = dir([paths.in.data '*.off']);
 n = length(dataset);
 p = nchoosek(1:n,2);
 
-parfor k = 1:length(p)
+for k = 1:length(p)
     % compute distance for each pair of shapes and save to file
     ik = p(k,1);
-    ik_data = read_data(dataset(ik).name);
     jk = p(k,2);
-    jk_data = read_data(dataset(jk).name);
     
     if strcmp(params.approach,'OT')
 %         compute TLB
-        distij = compute_dist_OT(params,ik_data,jk_data,num2str(ik),num2str(jk));
+        distij = compute_dist_OT(params,dataset(ik).name,dataset(jk).name,num2str(ik),num2str(jk));
     else
 %         compute bt
-        distij = compute_dist_PH(params,ik_data,jk_data,num2str(ik),num2str(jk));
+        distij = compute_dist_PH(params,dataset(ik).name,dataset(jk).name,num2str(ik),num2str(jk));
     end
 end
 
