@@ -59,7 +59,7 @@ K = 2000;
 %% Parameters setup
 % global params
 if strcmp(approach,'OT')
-    params = param_setup_OT('uniform','euc',norm,D,epsilon, K);
+    params = param_setup_OT('uniform','euc',norm,D,epsilon, K, niter);
 elseif strcmp(approach,'PH')
     params = param_setup_PH(filtration,'euc',norm,'bt',maxdim,numPoints);
 else
