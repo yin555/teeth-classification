@@ -42,8 +42,10 @@ mkdir(paths.out.pe)
 approach = 'OT';
 D = 0.3;
 epsilon = 0.05;
+niter = 10; % number of iterations for sinkhorn solver, changes with choice of epsilon
 norm = false;
 K = 2000;
+
 
 % % parameters for the PH approach
 % approach = 'PH';
