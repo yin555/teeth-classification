@@ -6,7 +6,7 @@ mesh_files = dir([paths.in.data '*.off']);
 
 for i = 1:length(mesh_files)
     fname = mesh_files(i).name;
-    if check_holes([paths.in.data fname])
+    if check_holes([paths.in.data fname]) && exist([paths.out.filledTriangle fname(1:end-4) '.mat'],'file') ~= 2
         fill_cavities_helper([paths.in.data fname],fname(1:end-4))
     end
 end
