@@ -1,7 +1,7 @@
 % The main executible file responsible for the classification
 
 %% Path setup
-global paths
+% global paths
 
 basepath = '~/Desktop/Math/teeth_classification/';
 
@@ -67,10 +67,10 @@ else
 end
 
 %% Clean data (fill cavities)
-% fill_cavities();
+% fill_cavities(paths);
 
 %% Compute distance matrix
-dm = compute_distance_matrix(params);
+dm = compute_distance_matrix(paths,params);
 
 %% Classification accuracy
 % classify using leave-one-out

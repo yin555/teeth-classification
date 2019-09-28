@@ -1,4 +1,4 @@
-function [infinite_barcodes,dgm_dict,intervals_dict] = sublevel_filtration_simp(T,f,dim)
+function [infinite_barcodes,dgm_dict,intervals_dict] = sublevel_filtration_simp(T,f,dim,paths)
 %compute persistence diagram of a given positive-valued function f using sublevel
 %filtration
 %@param: T a triangulation of the shape
@@ -6,7 +6,7 @@ function [infinite_barcodes,dgm_dict,intervals_dict] = sublevel_filtration_simp(
 %@param: dim the dimension to which one want to compute
 
 %adds javaplex path
-global paths
+
 wd = pwd;
 addpath(paths.in.javaplex)
 load_javaplex;

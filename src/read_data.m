@@ -1,4 +1,4 @@
-function [T,X,Y,Z] = read_data(fname,paths)
+function [T,X,Y,Z] = read_data(paths,fname)
 % read filled shapes
 % global paths;
 

@@ -1,10 +1,10 @@
-function dgm = PH_VR(params,fname)
+function dgm = PH_VR(paths,params,fname)
 % compute persistence diagrams using Vietoris-Rips filtration
-global paths
+
 addpath(paths.in.ripser)
 
 % read mesh
-[T,X,Y,Z] = read_data([paths.in.data fname]);
+[T,X,Y,Z] = read_data(paths,fname);
 % read fps sample points
 I = load_fps(params,fname);
 

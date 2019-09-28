@@ -1,5 +1,5 @@
-function H0 = PH_maxMeancurv(params,fname)
-global paths
+function H0 = PH_maxMeancurv(paths,params,fname)
+
 addpath(paths.in.javaplex)
 load_javaplex;
     

@@ -1,9 +1,8 @@
-function pathName = saveDGM_setup(params)
+function pathName = saveDGM_setup(paths,params)
 % setup the directory for saving persistence diagrams
 % the structure of the directory is
 % filtration method (-> metric for VR) -> dimension for persistence diagrams
 
-global paths
 pathName = [paths.out.dgm params.filtration];
 
 if params.norm

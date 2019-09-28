@@ -1,6 +1,5 @@
-function fill_cavities()
+function fill_cavities(paths)
 % fill the 1-cycles in each mesh file
-global paths;
 
 mesh_files = dir([paths.in.data '*.off']);
 

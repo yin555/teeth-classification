@@ -1,9 +1,9 @@
-function bt = compute_dist_PH(params,fname1,fname2,sname1,sname2,paths)
-% global paths
+function bt = compute_dist_PH(paths,params,fname1,fname2,sname1,sname2)
+
 
 % compute persistence diagrams for shape 1 and shape 2
-compute_persistenceDGM(params,fname1,sname1)
-compute_persistenceDGM(params,fname2,sname2)
+compute_persistenceDGM(paths,params,fname1,sname1)
+compute_persistenceDGM(paths,params,fname2,sname2)
 
 % compute the bottleneck/wasserstein distances between two shapes
 wd = pwd;
@@ -12,7 +12,7 @@ bt = zeros(params.maxdim,1);
 
 for dim = 1:params.maxdim
     
-    directory = [saveDGM_setup(params) 'dim' num2str(dim-1) '/'];
+    directory = [saveDGM_setup(paths,params) 'dim' num2str(dim-1) '/'];
     savepath1 = [directory sname1 '.txt'];
     savepath2 = [directory sname2 '.txt'];
     if strcmp(params.barcode_distance,'bt')
@@ -49,41 +49,40 @@ end
 
 end
 
-function dgm = PH_sublevel(params,fname)
-global paths
-[T,X,Y,Z] = read_ph_off([paths.in.data fname]);
+function dgm = PH_sublevel(paths,params,fname)
+[T,X,Y,Z] = read_data(paths,fname);
 f = filtration(params,T,X,Y,Z);
-[~,dgm,~] = sublevel_filtration_simp(T,f,params.maxdim);
+[~,dgm,~] = sublevel_filtration_simp(T,f,params.maxdim,paths);
 end
 
-function dgm = compute_persistenceDGM(params,fname,sname)
-savepath = saveDGM_setup(params);
+function dgm = compute_persistenceDGM(paths,params,fname,sname)
+savepath = saveDGM_setup(paths,params);
 if exist([savepath 'dim0/' sname '.txt'],'file') == 2
     return;
 end
 
 % compute persistence diagram for shape if not exist
-dgm = filtration_method(params,fname);
+dgm = filtration_method(paths,params,fname);
 
 % save persistence diagrams
 for dim = 1:params.maxdim
-    saveDGM(dgm{dim},params,dim-1,sname)
+    saveDGM(dgm{dim},paths,params,dim-1,sname)
 end
 
 end
 
-function dgm = filtration_method(params,fname)
+function dgm = filtration_method(paths,params,fname)
 % build filtrations for the two shapes
 
 if strcmp(params.filtration,'maxMeancurv')
 %     build filtration function using mean curvature function
-    dgm = PH_maxMeancurv(params,fname);
+    dgm = PH_maxMeancurv(paths,params,fname);
 elseif ~isempty(strfind(params.filtration,'VR'))
 %     build VR filtration using Ripser/JavaPlex
-    dgm = PH_VR(params,fname);    
+    dgm = PH_VR(paths,params,fname);    
 else
 %     build sublevel filtration using JavaPlex
-    dgm = PH_sublevel(params,fname);
+    dgm = PH_sublevel(paths,params,fname);
 end
 end
 

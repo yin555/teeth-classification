@@ -1,4 +1,4 @@
-function tlb = compute_dist_OT(params,fname1,fname2,sname1,sname2,paths)
+function tlb = compute_dist_OT(paths,params,fname1,fname2,sname1,sname2)
 % compute the distance (TLB) between a pair of shapes using optimal transport
 % passing global variable paths to function to avoid conflict between
 % parfor and global variables
@@ -15,7 +15,7 @@ if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2
         vX = T.v;
         wX = T.w;
     catch
-        [vX,wX] = process_dm(fname1,params,sname1);
+        [vX,wX] = process_dm(paths,fname1,params,sname1);
     end
     
 %     setup local shape distribution and measure for shape 2
@@ -24,7 +24,7 @@ if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2
         vY = T.v;
         wY = T.w;
     catch
-        [vY,wY] = process_dm(fname2,params,sname2);
+        [vY,wY] = process_dm(paths,fname2,params,sname2);
     end
     
     K = params.K;
@@ -51,13 +51,13 @@ if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2
     [~,~,gamma,~,~,~] = sinkhorn_log(wX,wY,Q,epsParam,options);
 %     [ct gamma] = solveTranspProblem(wX,wY,Q);
     tlb = sum(sum(Q.*gamma)); % this will calculate the TLB (p=1)
-    save(savepath_tlb(params,sname1,sname2),'gamma','tlb')
+    save(savepath_tlb(paths,params,sname1,sname2),'gamma','tlb')
 end
 end
 
-function [v,w]= process_dm(filename,params,sname)
-global paths
-[T,X,Y,Z] = read_data(filename);
+function [v,w]= process_dm(paths,filename,params,sname)
+% compute fps and local shape distribution
+[T,X,Y,Z] = read_data(paths,filename);
 %         disp('Computing Euclidean Farthest Point Sampling...')
 if params.K < length(X)
     I = euclid_far_samp(X,Y,Z,params.K);

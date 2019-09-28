@@ -1,6 +1,5 @@
-function path = savepath_tlb(params,sname1,sname2)
+function path = savepath_tlb(paths,params,sname1,sname2)
 % set up the saving path for tlb results
-global paths
 
 pathName = [paths.out.tlb params.metric];
 if params.norm
