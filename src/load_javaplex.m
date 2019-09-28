@@ -2,18 +2,19 @@
 
 % clc; clear all; close all;
 % clear import;
-cd '~/Documents/MATLAB/matlab_examples/';
-
+function load_javaplex(paths)
+wd = pwd;
+cd(paths.in.javaplex)
 javaaddpath('./lib/javaplex.jar');
 import edu.stanford.math.plex4.*;
 
 javaaddpath('./lib/plex-viewer.jar');
 import edu.stanford.math.plex_viewer.*;
 
-cd './utility';
-addpath(pwd);
-cd '..';
-
-% cd '~/Downloads/CPsurfcomp/';
+% cd './utility';
+% addpath(pwd);
+% cd '..';
+cd(wd)
+end
 
 

@@ -8,7 +8,7 @@ disp('imported javaplex')
 
 [T,X,Y,Z] = read_ph_off([paths.in.data fname]);
 
-I = load_fps(params,fname);
+I = load_fps(paths,params,fname);
 
 [dm,vfilt] = distance_matrix(params,I,T,X,Y,Z);
 

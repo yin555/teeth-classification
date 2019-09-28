@@ -1,24 +1,25 @@
 function bt = compute_dist_PH(paths,params,fname1,fname2,sname1,sname2)
 
-
 % compute persistence diagrams for shape 1 and shape 2
 compute_persistenceDGM(paths,params,fname1,sname1)
 compute_persistenceDGM(paths,params,fname2,sname2)
 
 % compute the bottleneck/wasserstein distances between two shapes
 wd = pwd;
-cd(paths.in.hera)
-bt = zeros(params.maxdim,1);
+base_directory = saveDGM_setup(paths,params);
+bt = zeros(params.maxdim+1,1);
 
-for dim = 1:params.maxdim
+for dim = 1:params.maxdim+1
     
-    directory = [saveDGM_setup(paths,params) 'dim' num2str(dim-1) '/'];
+    directory = [base_directory 'dim' num2str(dim-1) '/'];
     savepath1 = [directory sname1 '.txt'];
     savepath2 = [directory sname2 '.txt'];
     if strcmp(params.barcode_distance,'bt')
 %         compute the bottleneck distance between the files
+        cd([paths.in.hera 'geom_bottleneck/build/'])
         [~,bt_out] = system(['./bottleneck_dist ' savepath1 ' ' savepath2]);
     else
+        cd([paths.in.hera 'geom_bottleneck/wasserstein/build/'])
         [~,bt_out] = system(['./wasserstein_dist ' savepath1 ' ' savepath2 ' 2']);
     end
     bt_dim = parse_bt(bt_out);
@@ -26,7 +27,7 @@ for dim = 1:params.maxdim
 end
 cd(wd)
 
-bt_path = savepath_bt(params,sname1,sname2);
+bt_path = savepath_bt(paths,params,sname1,sname2);
 save(bt_path,'bt')
 end
 
@@ -43,7 +44,7 @@ elseif strcmp(params.filtration,'MinusAbsMeancurv')
 end
 
 % normalize filtration function
-if param.norm
+if params.norm
     f = f/max(f);
 end
 
@@ -52,7 +53,7 @@ end
 function dgm = PH_sublevel(paths,params,fname)
 [T,X,Y,Z] = read_data(paths,fname);
 f = filtration(params,T,X,Y,Z);
-[~,dgm,~] = sublevel_filtration_simp(T,f,params.maxdim,paths);
+[~,dgm,~] = sublevel_filtration_simp(T,f,params.maxdim+1,paths);
 end
 
 function dgm = compute_persistenceDGM(paths,params,fname,sname)
@@ -65,7 +66,7 @@ end
 dgm = filtration_method(paths,params,fname);
 
 % save persistence diagrams
-for dim = 1:params.maxdim
+for dim = 1:params.maxdim+1
     saveDGM(dgm{dim},paths,params,dim-1,sname)
 end
 
