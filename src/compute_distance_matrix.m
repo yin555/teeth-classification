@@ -11,18 +11,18 @@ dataset = dir([paths.in.data '*.off']);
 n = length(dataset);
 p = nchoosek(1:n,2);
 
-parfor k = 1:length(p)
+for k = 1:length(p)
     % compute distance for each pair of shapes and save to file
     ik = p(k,1);
     jk = p(k,2);
     
     if strcmp(params.approach,'OT')
 %         compute TLB
-        distij = compute_dist_OT(params,dataset(ik).name,dataset(jk).name,num2str(ik),num2str(jk),...
+        distij = compute_dist_OT(paths,params,dataset(ik).name,dataset(jk).name,num2str(ik),num2str(jk),...
             paths);
     else
 %         compute bt
-        distij = compute_dist_PH(params,dataset(ik).name,dataset(jk).name,num2str(ik),num2str(jk),...
+        distij = compute_dist_PH(paths,params,dataset(ik).name,dataset(jk).name,num2str(ik),num2str(jk),...
             paths);
     end
 end
