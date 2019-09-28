@@ -27,9 +27,10 @@ function true_label = reorder_label(paths,label,codes)
 % param: codes are the names that match with the file names in the data
 % directory
 
-meshnames = cell(length(paths.in.data),1);
+dir_meshes = dir([paths.in.data '*.off']);
+meshnames = cell(length(dir_meshes),1);
 % load the file names in the data path
-for k=1:length(paths.in.data), meshnames{k} = lower(dir_meshes(k).name(1:end-8));end
+for k=1:length(dir_meshes), meshnames{k} = lower(dir_meshes(k).name(1:end-8));end
 for i=1:length(meshnames)
     if ismember(meshnames{i},{'i14-hom1','i15-hom1','i16-hom1','i17-hom1'})
         meshnames{i} = meshnames{i}(1:3);
