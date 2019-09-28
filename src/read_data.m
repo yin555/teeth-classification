@@ -1,6 +1,6 @@
-function [T,X,Y,Z] = read_data(fname)
+function [T,X,Y,Z] = read_data(fname,paths)
 % read filled shapes
-global paths
+% global paths;
 
 try
     load([paths.out.filledTriangle fname(1:end-4) '.mat'])
