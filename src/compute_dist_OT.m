@@ -1,6 +1,9 @@
-function tlb = compute_dist_OT(params,fname1,fname2,sname1,sname2)
+function tlb = compute_dist_OT(params,fname1,fname2,sname1,sname2,paths)
 % compute the distance (TLB) between a pair of shapes using optimal transport
-global paths
+% passing global variable paths to function to avoid conflict between
+% parfor and global variables
+
+% global paths
 addpath(genpath(paths.in.sinkhorn))
 
 if exist([paths.out.tlb '/tlb' sname1 '_' sname2 '.mat'],'file') ~= 2

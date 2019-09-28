@@ -1,5 +1,5 @@
-function bt = compute_dist_PH(params,fname1,fname2,sname1,sname2)
-global paths
+function bt = compute_dist_PH(params,fname1,fname2,sname1,sname2,paths)
+% global paths
 
 % compute persistence diagrams for shape 1 and shape 2
 compute_persistenceDGM(params,fname1,sname1)
