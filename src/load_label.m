@@ -2,7 +2,7 @@ function [true_label,conversion_key] = load_label(paths,category)
 % load the label in integers, provided with the conversion key
 
 % load the excel file
-[~,~,spreadsheet] = xlsread(paths.in.label);
+[~,spreadsheet] = xlsread(paths.in.label);
 if strcmp(category,'diet')
     colnum = 7;
 elseif strcmp(category,'family')
