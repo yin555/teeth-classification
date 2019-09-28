@@ -40,6 +40,6 @@ end
 % clean the file names
 meshnames = regexprep(meshnames,'#|*| ','');
 
-[~,order] = ismember(meshnames,codes);
+[~,order] = ismember(meshnames,lower(codes));
 true_label = label(order);
 end
