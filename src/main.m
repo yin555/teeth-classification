@@ -14,8 +14,8 @@ paths.in.toolboxGeneral = [basepath 'include/toolbox_general/'];
 paths.in.toolboxSignal = [basepath 'include/toolbox_signal/'];
 paths.in.ripser = [basepath 'include/ripser-master/'];
 paths.in.javaplex = [basepath 'include/appliedtopology-javaplex-6a2ef48/'];
-paths.in.shortloop = [basepath 'include/ShortLoop'];
-paths.in.hera = [basepath 'include/hera'];
+paths.in.shortloop = [basepath 'include/ShortLoop/'];
+paths.in.hera = [basepath 'include/hera/'];
 
 % set up output paths
 paths.out.fps = [basepath 'data/cache/fps/'];
@@ -23,7 +23,7 @@ paths.out.localDist = [basepath 'data/cache/localDist/'];
 paths.out.filledTriangle = [basepath 'data/cache/filledTriangle/'];
 paths.out.tlb = [basepath 'data/cache/tlb/'];
 paths.out.dgm = [basepath 'data/cache/dgm/'];
-paths.out.bt = [basepath 'data/cache/bt/'];
+paths.out.db = [basepath 'data/cache/db/'];
 
 paths.out.fig = [basepath 'out/figures/'];
 paths.out.pe = [basepath 'out/Pe/'];
@@ -37,24 +37,24 @@ mkdir(paths.out.fig)
 mkdir(paths.out.pe)
 
 %% Choose approach
-% choose from 'OT' (optimal transport)
-%          or 'PH' (persistent homology)
-approach = 'OT';
-D = 0.3;
-epsilon = 0.05;
-niter = 10; % number of iterations for sinkhorn solver, changes with choice of epsilon
-norm = false;
-K = 2000;
-
-
-% % parameters for the PH approach
-% approach = 'PH';
-% % choices of filtration inlcudes: VR, VR_modified, maxMeancurv,
-% % absMeancurv, MinusAbsMeancurv
-% filtration = 'VR';
+% % choose from 'OT' (optimal transport)
+% %          or 'PH' (persistent homology)
+% approach = 'OT';
+% D = 0.3;
+% epsilon = 0.05;
+% niter = 10; % number of iterations for sinkhorn solver, changes with choice of epsilon
 % norm = false;
-% maxdim = 2;
-% numPoints = 500;
+% K = 2000;
+
+
+% parameters for the PH approach
+approach = 'PH';
+% choices of filtration inlcudes: VR, VR_modified, maxMeancurv,
+% absMeancurv, MinusAbsMeancurv
+filtration = 'absMeancurv';
+norm = false;
+maxdim = 1; 
+numPoints = 500;
 
 %% Parameters setup
 % global params
