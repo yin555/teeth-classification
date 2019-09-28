@@ -18,12 +18,10 @@ for k = 1:length(p)
     
     if strcmp(params.approach,'OT')
 %         compute TLB
-        distij = compute_dist_OT(paths,params,dataset(ik).name,dataset(jk).name,num2str(ik),num2str(jk),...
-            paths);
+        distij = compute_dist_OT(paths,params,dataset(ik).name,dataset(jk).name,num2str(ik),num2str(jk));
     else
 %         compute bt
-        distij = compute_dist_PH(paths,params,dataset(ik).name,dataset(jk).name,num2str(ik),num2str(jk),...
-            paths);
+        distij = compute_dist_PH(paths,params,dataset(ik).name,dataset(jk).name,num2str(ik),num2str(jk));
     end
 end
 
