@@ -5,7 +5,14 @@ params.approach = 'PH';
 params.filtration = filt;
 params.metric = dist;
 params.norm = norm;
-params.maxdim = maxdim;
+if strcmp(params.filtration,'maxMeancurv')
+    params.maxdim = 0;
+elseif any(strcmp(params.filtration,{'absMeancurv','MinusAbsMeancurv'}))
+    params.maxdim = 1;
+else
+    params.maxdim = maxdim;
+end
+
 params.barcode_distance = bar_dist;
 params.numPoints = numPoints;
 if nargin < 7
