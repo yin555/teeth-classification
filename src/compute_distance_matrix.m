@@ -43,10 +43,10 @@ for k = 1:length(p)
     ik = p(k,1);
     jk = p(k,2);
     if strcmp(params.approach,'OT')
-        load(savepath_tlb(params,num2str(ik),num2str(jk)))
+        load(savepath_tlb(paths,params,num2str(ik),num2str(jk)))
         dm(ik,jk) = tlb;
     else
-        load(savepath_bt(params,num2str(ik),num2str(jk)))
+        load(savepath_bt(paths,params,num2str(ik),num2str(jk)))
         for i = 1:params.maxdim
             dm{i}(ik,jk) = bt(i);
         end
