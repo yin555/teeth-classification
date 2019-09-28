@@ -1,7 +1,6 @@
-function [true_label,conversion_key] = load_label(category)
+function [true_label,conversion_key] = load_label(paths,category)
 % load the label in integers, provided with the conversion key
 
-global paths
 % load the excel file
 [~,~,spreadsheet] = xlsread(paths.in.label);
 if strcmp(category,'diet')
@@ -18,16 +17,15 @@ end
 labels = spreadsheet(2:end,colnum);
 codes = spreadsheet(2:end,end);
 % process the labels to drop special characters
-labels = reorder_label(labels,codes);
+labels = reorder_label(paths,labels,codes);
 conversion_key = unique(labels);
 [~,true_label] = ismember(labels,conversion_key);
 end
 
-function true_label = reorder_label(label,codes)
+function true_label = reorder_label(paths,label,codes)
 % reorder the labels to match the ordering in the data directory
 % param: codes are the names that match with the file names in the data
 % directory
-global paths
 
 meshnames = cell(length(paths.in.data),1);
 % load the file names in the data path

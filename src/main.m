@@ -79,7 +79,7 @@ fig = cell(params.maxdim);
 
 % load labels by category: family, genus, diet
 category = 'diet';
-true_label = load_label(category);
+true_label = load_label(paths,category);
 
 savename = savename_setup(params);
 
