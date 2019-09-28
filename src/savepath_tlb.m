@@ -15,7 +15,7 @@ if strcmp(params.measure,'voronoi')
     pathName = [pathName '/' num2str(params.K)];
 end
 
-pathName = [pathName '/' num2str(params.D)];
+pathName = [pathName '/' num2str(params.D)  '/'];
 
 mkdir(pathName)
 
