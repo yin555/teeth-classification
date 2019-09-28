@@ -1,12 +1,12 @@
-function H0 = PH_maxMeancurv(paths,params,fname)
+function dgm = PH_maxMeancurv(paths,params,fname)
 
 addpath(paths.in.javaplex)
-load_javaplex;
+load_javaplex(paths)
     
 import edu.stanford.math.plex4.*;
 disp('imported javaplex')
 
-[T,X,Y,Z] = read_ph_off([paths.in.data fname]);
+[T,X,Y,Z] = read_data(paths,fname);
 
 I = load_fps(paths,params,fname);
 
@@ -36,7 +36,7 @@ H0 = edu.stanford.math.plex4.homology.barcodes.BarcodeUtility.getEndpoints(inter
 inf_ind = isinf(H0(:,2));
 % convert infinite bars to the diameter of the shapes
 H0(inf_ind,2) = max(dm(:));
-
+dgm{1} = H0;
 end
 
 function bool = find_triangle(T,v1,v2)

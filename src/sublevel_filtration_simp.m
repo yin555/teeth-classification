@@ -9,7 +9,7 @@ function [infinite_barcodes,dgm_dict,intervals_dict] = sublevel_filtration_simp(
 
 wd = pwd;
 addpath(paths.in.javaplex)
-load_javaplex;
+load_javaplex(paths);
 import edu.stanford.math.plex4.*;
 
 stream = api.Plex4.createExplicitSimplexStream(max(f)+10);
@@ -37,7 +37,6 @@ for curr_dim = 1:dim
     dgm = edu.stanford.math.plex4.homology.barcodes.BarcodeUtility.getEndpoints(intervals, curr_dim-1, 0);
     dgm_dict{curr_dim} = remove_trivial(dgm);
 %     save output
-    dlmwrite([])
     if nargout == 3
         intervals_dict{curr_dim} = intervals.getIntervalsAtDimension(curr_dim-1);
     end

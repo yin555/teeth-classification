@@ -9,6 +9,6 @@ addpath(paths.in.ripser)
 I = load_fps(paths,params,fname);
 
 [dm,~] = distance_matrix(params,I,T,X,Y,Z);
-dgm = ripserDM(dm,2,2);
+dgm = ripserDM(dm,2,params.maxdim);
 
 end
