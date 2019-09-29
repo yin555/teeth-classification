@@ -57,7 +57,7 @@ maxdim = 1;
 numPoints = 500;
 
 %% Parameters setup
-% global params
+
 if strcmp(approach,'OT')
     params = param_setup_OT('uniform','euc',norm,D,epsilon, K, niter);
 elseif strcmp(approach,'PH')
@@ -67,7 +67,7 @@ else
 end
 
 %% Clean data (fill cavities)
-% fill_cavities(paths);
+fill_cavities(paths);
 
 %% Compute distance matrix
 dm = compute_distance_matrix(paths,params);
@@ -90,6 +90,6 @@ for i = 1:params.maxdim
 
     % plot distance matrix and single-linkage dendrogram
     fig{i} = clustergram(dm{i},'ColumnLabels',true_label);
-    savefig(gcf,[paths.out.fig{i} savename '_dim' num2str(i) '.jpg'])
+    savefig(gcf,[paths.out.fig savename '_dim' num2str(i) '.jpg'])
 end
 save([paths.out.pe savename '.mat'],'Pe')
