@@ -5,30 +5,33 @@ compute_persistenceDGM(paths,params,fname1,sname1)
 compute_persistenceDGM(paths,params,fname2,sname2)
 
 % compute the bottleneck/wasserstein distances between two shapes
-wd = pwd;
-base_directory = saveDGM_setup(paths,params);
-bt = zeros(params.maxdim+1,1);
-
-for dim = 1:params.maxdim+1
-    
-    directory = [base_directory 'dim' num2str(dim-1) '/'];
-    savepath1 = [directory sname1 '.txt'];
-    savepath2 = [directory sname2 '.txt'];
-    if strcmp(params.barcode_distance,'bt')
-%         compute the bottleneck distance between the files
-        cd([paths.in.hera 'geom_bottleneck/build/'])
-        [~,bt_out] = system(['./bottleneck_dist ' savepath1 ' ' savepath2]);
-    else
-        cd([paths.in.hera 'geom_bottleneck/wasserstein/build/'])
-        [~,bt_out] = system(['./wasserstein_dist ' savepath1 ' ' savepath2 ' 2']);
-    end
-    bt_dim = parse_bt(bt_out);
-    bt(dim) = bt_dim;
-end
-cd(wd)
-
 bt_path = savepath_bt(paths,params,sname1,sname2);
-save(bt_path,'bt')
+if exist(bt_path,'file') ~= 2
+    wd = pwd;
+    base_directory = saveDGM_setup(paths,params);
+    bt = zeros(params.maxdim+1,1);
+
+    for dim = 1:params.maxdim+1
+        
+        directory = [base_directory 'dim' num2str(dim-1) '/'];
+        savepath1 = [directory sname1 '.txt'];
+        savepath2 = [directory sname2 '.txt'];
+        if strcmp(params.barcode_distance,'bt')
+    %         compute the bottleneck distance between the files
+            cd([paths.in.hera 'geom_bottleneck/build/'])
+            [~,bt_out] = system(['./bottleneck_dist ' savepath1 ' ' savepath2]);
+        else
+            cd([paths.in.hera 'geom_bottleneck/wasserstein/build/'])
+            [~,bt_out] = system(['./wasserstein_dist ' savepath1 ' ' savepath2 ' 2']);
+        end
+        bt_dim = parse_bt(bt_out);
+        bt(dim) = bt_dim;
+    end
+    cd(wd)
+
+
+    save(bt_path,'bt')
+    end
 end
 
 function f = filtration(params,T,X,Y,Z)
