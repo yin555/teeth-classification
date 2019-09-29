@@ -5,42 +5,42 @@ mesh_files = dir([paths.in.data '*.off']);
 
 for i = 1:length(mesh_files)
     fname = mesh_files(i).name;
-    if check_holes([paths.in.data fname]) && exist([paths.out.filledTriangle fname(1:end-4) '.mat'],'file') ~= 2
-        fill_cavities_helper([paths.in.data fname],fname(1:end-4))
+    if check_holes(paths,fname) && exist([paths.out.filledTriangle fname(1:end-4) '.mat'],'file') ~= 2
+        fill_cavities_helper(paths,fname,fname(1:end-4))
     end
 end
 
 end
 
-function bool_1cycle = check_holes(path2file)
+function bool_1cycle = check_holes(paths,fname)
 % check if there is 1-cycle in the mesh
-global paths
 wd = pwd;
 bool_1cycle = false;
 cd(paths.in.shortloop)
-if exist([path2file(1:end-4) '_loops.txt'],'file') ~= 2
-    system(['./ShortLoop ' path2file ' -v -t'])
+savepath = [paths.in.data fname(1:end-4)];
+if exist([savepath '_loops.txt'],'file') ~= 2
+    system(['./ShortLoop ' savepath '.off -v -t'])
 end
-fid = fopen([path2file(1:end-4) '_loops.txt'],'r');
+fid = fopen([savepath '_loops.txt'],'r');
 first_line = textscan(fid,'%f %s',1,'delimiter',' ');
 n_loop = first_line(1);
 if n_loop{1} > 0
     bool_1cycle = true;
 else
 %     delete the files if there is no 1-cycles in the mesh
-    delete([path2file(1:end-4) '_loops.txt'])
+    delete([savepath '_loops.txt'])
 end
-delete([path2file(1:end-4) '_loops.off'])
-delete([path2file(1:end-4) '_timing.txt'])
+delete([savepath '_loops.off'])
+delete([savepath '_timing.txt'])
 cd(wd)
 end
 
-function fill_cavities_helper(path2file,sname)
+function fill_cavities_helper(paths,fname,sname)
 % fill 1-cycles in the mesh using the generators output by ShortLoop
-global paths
 disp('loading loops')
-all_loops = load_loop([path2file(1:end-4) '_loops.txt']);
-[Tp,Xp,Yp,Zp] = read_off_ph(path2file);
+path2file = [paths.in.data fname(1:end-4)];
+all_loops = load_loop([path2file '_loops.txt']);
+[Tp,Xp,Yp,Zp] = read_data([path2file '.off']);
 disp('filling holes')
 [T,X,Y,Z] = fill_holes(Tp,Xp,Yp,Zp,all_loops);
 save([paths.out.filledTriangle sname '.mat'],'T','X','Y','Z');
