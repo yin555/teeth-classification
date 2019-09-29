@@ -31,8 +31,9 @@ if exist(bt_path,'file') ~= 2
 
 
     save(bt_path,'bt')
-    end
 end
+end
+
 
 function f = filtration(params,T,X,Y,Z)
 % build the filtration function for sublevel filtration 
