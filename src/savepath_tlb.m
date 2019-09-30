@@ -17,7 +17,9 @@ end
 
 pathName = [pathName '/' num2str(params.D)  '/'];
 
-mkdir(pathName)
+if ~exsit(pathName)
+    mkdir(pathName)
+end
 
 path = [pathName sname1 '_' sname2 '.mat'];
 end

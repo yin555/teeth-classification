@@ -13,7 +13,9 @@ end
 if ~isempty(strfind(params.filtration,'VR'))
     pathName = [pathName params.metric '/'];
 end
-mkdir([savepath pathName])
+if ~exist([savepath pathName])
+    mkdir([savepath pathName])
+end
 
 path = [savepath pathName sname1 '_' sname2 '.mat'];
 end
