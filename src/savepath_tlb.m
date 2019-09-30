@@ -17,7 +17,7 @@ end
 
 pathName = [pathName '/' num2str(params.D)  '/'];
 
-if ~exsit(pathName)
+if exsit(pathName,'dir') ~= 7
     mkdir(pathName)
 end
 

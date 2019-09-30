@@ -13,7 +13,7 @@ end
 if ~isempty(strfind(params.filtration,'VR'))
     pathName = [pathName params.metric '/'];
 end
-if ~exist([savepath pathName])
+if exist([savepath pathName],'dir') ~= 7
     mkdir([savepath pathName])
 end
 
