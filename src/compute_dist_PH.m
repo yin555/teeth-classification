@@ -1,4 +1,4 @@
-function bt = compute_dist_PH(paths,params,fname1,fname2,sname1,sname2)
+function compute_dist_PH(paths,params,fname1,fname2,sname1,sname2)
 
 % compute persistence diagrams for shape 1 and shape 2
 compute_persistenceDGM(paths,params,fname1,sname1)
@@ -97,3 +97,10 @@ filebyline = regexp(output_string, '\n', 'split');
 filebyline(cellfun(@isempty,filebyline)) = [];
 bt = str2double(filebyline);
 end
+% 
+% function savebt(bt_path,bt)
+% % save the barcode distances as txt file
+% fid = fopen(bt_path,'w');
+% fprintf(fid,'%12.8f',bt);
+% fclose(fid);
+% end

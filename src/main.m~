@@ -54,14 +54,14 @@ K = 2000;
 % filtration = 'absMeancurv';
 % norm = false;
 % maxdim = 1; 
-% K = 500;
+% numPoints = 500;
 
 %% Parameters setup
 
 if strcmp(approach,'OT')
     params = param_setup_OT('uniform','euc',norm,D,epsilon, K, niter);
 elseif strcmp(approach,'PH')
-    params = param_setup_PH(filtration,'euc',norm,'bt',maxdim,K);
+    params = param_setup_PH(filtration,'euc',norm,'bt',maxdim,numPoints);
 else
     disp('Invalid approach')
 end
@@ -74,25 +74,22 @@ dm = compute_distance_matrix(paths,params);
 
 %% Classification accuracy
 % classify using leave-one-out
-Pe = zeros(params.maxdim+1,1);
-fig = cell(params.maxdim+1);
+Pe = zeros(params.maxdim,1);
+fig = cell(params.maxdim);
 
 % load labels by category: family, genus, diet
 category = 'diet';
-[true_label,classNames] = load_label(paths,category);
+true_label = load_label(paths,category);
 
 savename = savename_setup(params);
 
-for i = 1:params.maxdim+1
+for i = 1:params.maxdim
     % compute the probability of error
     predict = leave_one_out(dm{i},true_label);
     Pe(i) = sum(true_label==predict)/length(true_label);
 
     % plot distance matrix and single-linkage dendrogram
     fig{i} = clustergram(dm{i},'ColumnLabels',true_label);
-    if exist([paths.out.fig params.approach],'dir') ~= 7
-        mkdir([paths.out.fig params.approach])
-    end
-    save([paths.out.fig savename '_dim' num2str(i-1) '.fig'],'fig')
+    savefig(gcf,[paths.out.fig savename '_dim' num2str(i) '.jpg'])
 end
 save([paths.out.pe savename '.mat'],'Pe')

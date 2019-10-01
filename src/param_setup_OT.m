@@ -9,5 +9,5 @@ params.eps = epsilon;
 params.K = K;
 params.N = 100;
 params.niter = niter;
-params.maxdim = 1;
+params.maxdim = 0;
 end

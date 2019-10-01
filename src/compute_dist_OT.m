@@ -1,4 +1,4 @@
-function tlb = compute_dist_OT(paths,params,fname1,fname2,sname1,sname2)
+function compute_dist_OT(paths,params,fname1,fname2,sname1,sname2)
 % compute the distance (TLB) between a pair of shapes using optimal transport
 
 addpath(genpath(paths.in.sinkhorn))
@@ -7,7 +7,11 @@ savetlb_path = savepath_tlb(paths,params,sname1,sname2);
 if exist(savetlb_path,'file') ~= 2
 %     setup local shape distribution and measure for shape 1
     path = [paths.out.localDist '/' params.metric '/' params.measure '/' num2str(params.K) '/'];
-    mkdir(path)
+    
+    if exist(path,'dir') ~= 7
+        mkdir(path)
+    end
+    
     try
         T = load([path sname1 '.mat']);
         vX = T.v;
@@ -49,7 +53,7 @@ if exist(savetlb_path,'file') ~= 2
     [~,~,gamma,~,~,~] = sinkhorn_log(wX,wY,Q,epsParam,options);
 %     [ct gamma] = solveTranspProblem(wX,wY,Q);
     tlb = sum(sum(Q.*gamma)); % this will calculate the TLB (p=1)
-    save(savetlb_path,'gamma','tlb')
+    save(savetlb_path,'tlb')
 end
 end
 
@@ -106,4 +110,9 @@ function v = localDist(dm,NN,DD,mu)
     end
     v = v/max(v(:));
 end
-
+% 
+% function savetlb(tlb_path,tlb)
+% fid = fopen(tlb_path,'w');
+% fprintf(fid,'%12.8f\n',tlb);
+% fclose(fid);
+% end
